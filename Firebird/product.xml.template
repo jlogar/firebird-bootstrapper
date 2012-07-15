@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Product ProductCode="Firebird" xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper">
+  <PackageFiles CopyAllPackageFiles="false">
+    <PackageFile Name="#FIREBIRD_EXECUTABLE#" HomeSite="#WEB_LOCATION##FIREBIRD_EXECUTABLE#" />
+  </PackageFiles>
+  <Commands Reboot="None">
+    <InstallConditions>
+      <FailIf Property="AdminUser" Compare="ValueNotEqualTo" Value="True" String="NotAnAdmin"/>
+    </InstallConditions>
+    <Command PackageFile="#FIREBIRD_EXECUTABLE#" Arguments="/SILENT /SP- /NOCANCEL /COMPONENTS=&quot;ServerComponent\SuperServerComponent,DevAdminComponent,ClientComponent&quot;">
+      <ExitCodes>
+        <ExitCode Value="0" Result="Success"/>
+		<!-- treating this as succes not to fail installs because of firebird install fails (which includes existing install) -->
+		<ExitCode Value="1" Result="Success"/>
+        <DefaultExitCode Result="Fail" String="Anunexpectedexitcodewasr" FormatMessageFromSystem="true" />
+      </ExitCodes>
+    </Command>
+  </Commands>
+</Product>
